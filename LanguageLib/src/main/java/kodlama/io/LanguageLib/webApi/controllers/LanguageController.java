@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.session.InMemoryWebSessionStore;
 
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import kodlama.io.LanguageLib.business.concretes.LanguageManager;
 import kodlama.io.LanguageLib.dataAccess.abstracts.LanguageRepository;
 import kodlama.io.LanguageLib.dataAccess.concretes.InMemoryLanguageRepository;
@@ -29,12 +31,11 @@ public class LanguageController {
 
 	@GetMapping("/getall")
 	 List<Language> GetAllLanguage(){
-		 
 		 return languageManager.GetAllLanguage();
 	 }
 	@PutMapping("/update")
-	 void UpdateLanguageName(@PathVariable Language language,@PathVariable Language updatedLanguage) {
-		 languageManager.UpdateLanguageName(language, updatedLanguage);
+	 void UpdateLanguageName(@RequestBody Language language) throws Exception {
+		 languageManager.UpdateLanguageName(language);
 	 
 	 };
 	 @DeleteMapping("/{id}")
@@ -42,7 +43,7 @@ public class LanguageController {
 		  languageManager.DeleteLanguage(id);
 	 };
 	 @PostMapping("/add")
-	 void AddLanguage(Language language) {
+	 void AddLanguage(Language language) throws Exception {
 	 
 		 languageManager.AddLanguage(language);
 	 };

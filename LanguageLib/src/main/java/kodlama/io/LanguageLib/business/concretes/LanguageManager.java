@@ -25,9 +25,15 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public void UpdateLanguageName(Language language, Language updatedLanguage) {
+	public void UpdateLanguageName(Language language) throws Exception {
 		
-		languageRepository.UpdateLanguageName(language, updatedLanguage);		
+		if(languageRepository.IsIdAdded(language.getId()))
+			languageRepository.UpdateLanguageName( language);		
+		
+		else {
+			throw new Exception("No Language has this id");
+		}
+			
 	}
 
 	@Override
@@ -36,9 +42,16 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public void AddLanguage(Language language) {
-		languageRepository.AddLanguage(language);
+	public void AddLanguage(Language language) throws Exception {
+		if(languageRepository.IsNameAdded(language.getName()))
+			throw new Exception("Language : "+language.getName() +" is Already exist");
+		else if(languageRepository.IsIdAdded(language.getId()))
+			throw new Exception("Id : "+language.getId() +" is Already exist");	
 		
+		else {
+			languageRepository.AddLanguage(language);
+		}					
+
 	}
 
 	@Override

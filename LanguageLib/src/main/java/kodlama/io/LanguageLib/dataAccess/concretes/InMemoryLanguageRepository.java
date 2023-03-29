@@ -30,8 +30,8 @@ public class InMemoryLanguageRepository implements LanguageRepository {
 	}
 
 	@Override
-	public void UpdateLanguageName(Language language,Language updatedLanguage) {
-		languages.stream().filter(l-> l.equals(language)).forEach(l->l=updatedLanguage);	
+	public void UpdateLanguageName(Language language) {
+		languages.stream().filter(l-> l.getId()==language.getId()).forEach(l->l.setName(language.getName()));	
 	}
 
 	@Override
@@ -50,6 +50,20 @@ public class InMemoryLanguageRepository implements LanguageRepository {
 	
 		Language resultLAnguage =languages.stream().filter(l-> l.getId()==id).findFirst().orElse(null);
 		return 	resultLAnguage;
+	}
+
+
+	@Override
+	public boolean IsNameAdded(String name) {
+	boolean result 	= languages.stream().filter(l-> l.getName().equals(name)).count()>0;
+		return result;
+	}
+
+
+	@Override
+	public boolean IsIdAdded(int id) {
+		boolean result 	= languages.stream().filter(l-> l.getId()==id).count()>0;
+		return result;
 	}
 
 	
